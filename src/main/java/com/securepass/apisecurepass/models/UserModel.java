@@ -19,11 +19,11 @@ public class UserModel {
 
     private int matricula; // Número de matrícula do usuário
     private String nome; // Nome do usuário
-    private String area; // Área de trabalho ou setor do usuário
+    private String setor; // Área de trabalho ou setor do usuário
     private String email; // Email do usuário
 
     @Temporal(TemporalType.DATE)
-    private Date dataNascimento; // Data de nascimento do usuário
+    private Date nascimento; // Data de nascimento do usuário
 
     private String funcao; // Função ou cargo do usuário
     private int sessao; // Número de sessão associado ao usuário
@@ -31,6 +31,6 @@ public class UserModel {
 
     // Relacionamento muitos para um (many-to-one) com o modelo de tipo de usuário
     @ManyToOne
-    @JoinColumn(name = "tb_tipousuario", referencedColumnName = "id")
+    @JoinColumn(name = "id_tipousuario" , referencedColumnName = "id")
     private TypeUsersModel typeUser; // Tipo de usuário associado a este usuário
 }
