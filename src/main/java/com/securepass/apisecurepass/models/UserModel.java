@@ -31,6 +31,6 @@ public class UserModel {
 
     // Relacionamento muitos para um (many-to-one) com o modelo de tipo de usuário
     @ManyToOne
-    @JoinColumn(name = "id_tipousuario", referencedColumnName = "id")
+    @JoinColumn(name = "tb_tipousuario", referencedColumnName = "id")
     private TypeUsersModel typeUser; // Tipo de usuário associado a este usuário
 }
