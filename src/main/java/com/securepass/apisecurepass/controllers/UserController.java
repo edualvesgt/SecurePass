@@ -59,8 +59,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
 
-    @PutMapping(value = "/{types}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Object> editarUsuario(@PathVariable(value = "idUser") UUID id, @ModelAttribute @Valid UserDto userDto) {
+    @PutMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Object> editarUsuario(@PathVariable(value = "id") UUID id, @ModelAttribute @Valid UserDto userDto) {
         Optional<UserModel> searchUser = userRepository.findById(id);
 
         if (searchUser.isEmpty()) {
