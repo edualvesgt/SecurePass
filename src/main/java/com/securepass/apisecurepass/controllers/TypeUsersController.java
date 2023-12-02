@@ -50,7 +50,7 @@ public class TypeUsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @RequestBody @Valid TypeUsersDto typeUsersDto) {
+    public ResponseEntity<Object> Update(@PathVariable(value = "id") UUID id, @ModelAttribute @Valid TypeUsersDto typeUsersDto) {
         Optional<TypeUsersModel> SearchType = typeUsersRepository.findById(id);
         if (SearchType.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo Usuário não encontrado");

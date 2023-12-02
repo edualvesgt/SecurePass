@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -33,4 +34,11 @@ public class UserModel {
     @ManyToOne
     @JoinColumn(name = "id_tipousuario" , referencedColumnName = "id")
     private TypeUsersModel typeUser; // Tipo de usuário associado a este usuário
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_usuariomaquina",
+            joinColumns = @JoinColumn(name = "id_usuario"), // Chave estrangeira referente a Machine
+            inverseJoinColumns = @JoinColumn(name = "id_maquina")) // Chave estrangeira referente a User
+    Set<MachineModel> machines;
 }

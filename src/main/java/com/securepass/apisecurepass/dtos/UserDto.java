@@ -13,7 +13,7 @@ public record UserDto(
         String nome, // Nome do usuário
         String setor, // Área de trabalho ou setor do usuário
 
-         @Email(message = "O email deve estar em um formato válido") String email, // Email do usuário (validado quanto ao formato)
+        @NotBlank @Email(message = "O email deve estar em um formato válido") String email, // Email do usuário (validado quanto ao formato)
 
 //      @NotBlank String senha, deve ser analisado - Provavelmente um campo para senha (comentado para análise)
 

@@ -1,6 +1,7 @@
 package com.securepass.apisecurepass.controllers;
 
 import com.securepass.apisecurepass.dtos.UserDto;
+import com.securepass.apisecurepass.models.TypeUsersModel;
 import com.securepass.apisecurepass.models.UserModel;
 import com.securepass.apisecurepass.repositories.UserRepository;
 import com.securepass.apisecurepass.services.FileUploadService;
@@ -81,5 +82,17 @@ public class UserController {
         user.setFace(urlImagem);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> Delete(@PathVariable(value = "id") UUID id) {
+        Optional<UserModel> SearchType = userRepository.findById(id);
+        if (SearchType.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario nao encontrado");
+        }
+        SearchType.ifPresent(userRepository::delete);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario deletado");
     }
 }
