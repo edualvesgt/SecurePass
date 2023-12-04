@@ -1,5 +1,6 @@
 package com.securepass.apisecurepass.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class MachineModel {
     private int codigomaquina;
 
     @ManyToMany
+    @JsonIgnore // Ignora a serialização deste campo ao converter para JSON
     @JoinTable(
             name = "tb_usuariomaquina",
             joinColumns = @JoinColumn(name = "id_maquina"), // Chave estrangeira referente a Machine
