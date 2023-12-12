@@ -35,6 +35,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> searchUser(@PathVariable(value = "id") UUID id){
+        Optional<UserModel> searchUser = userRepository.findById(id);
+
+        if (searchUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(searchUser.get());
+    }
+
     // Endpoint para cadastrar um novo usuário
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> userRegister(@ModelAttribute UserDto userDto) {
