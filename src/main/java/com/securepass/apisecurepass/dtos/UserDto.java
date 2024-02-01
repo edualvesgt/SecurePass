@@ -17,12 +17,13 @@ public record UserDto(
 
 //      @NotBlank String senha, deve ser analisado - Provavelmente um campo para senha (comentado para análise)
 
+        //Formato da Data a ser visto
         @DateTimeFormat(pattern = "yyyy-MM-dd") Date nascimento , // Data de nascimento do usuário
 
         String funcao, // Função ou cargo do usuário
         int sessao, // Número de sessão
-        MultipartFile face, // Arquivo de imagem para o rosto do usuário
-        UUID typeUser // Tipo de usuário (representado por um UUID)
+        MultipartFile image, // Arquivo de imagem para o rosto do usuário
+        UUID id_tipousuario // Tipo de usuário (representado por um UUID)
 
 ) {
 }

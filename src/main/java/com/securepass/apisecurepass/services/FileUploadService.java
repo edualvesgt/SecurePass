@@ -15,10 +15,10 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class FileUploadService {
     // Diretório onde as imagens serão salvas
-    private final Path diretorioImg = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img");
+    private static final Path diretorioImg = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img");
 
     // Método para realizar o upload de uma imagem
-    public String FazerUpload(MultipartFile face) throws IOException {
+    public static String FazerUpload(MultipartFile face) throws IOException {
 
         if (face.isEmpty()) {
             // Verifica se a imagem está vazia

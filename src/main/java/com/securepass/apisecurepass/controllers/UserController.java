@@ -1,5 +1,6 @@
 package com.securepass.apisecurepass.controllers;
 
+import com.securepass.apisecurepass.config.Blob;
 import com.securepass.apisecurepass.dtos.UserDto;
 import com.securepass.apisecurepass.models.TypeUsersModel;
 import com.securepass.apisecurepass.models.UserModel;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/users", produces = {"application/json"})
 public class UserController {
 
@@ -36,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> searchUser(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> searchUser(@PathVariable(value = "id") UUID id) {
         Optional<UserModel> searchUser = userRepository.findById(id);
 
         if (searchUser.isEmpty()) {
@@ -48,7 +50,7 @@ public class UserController {
 
     // Endpoint para cadastrar um novo usuário
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Object> userRegister(@ModelAttribute UserDto userDto) {
+    public ResponseEntity<Object> userRegister(@ModelAttribute @Valid UserDto userDto) {
         // Verifica se o email já está cadastrado
         if (userRepository.findByEmail(userDto.email()) != null) {
             // Se o email já existe, retorna um erro
@@ -59,13 +61,16 @@ public class UserController {
         UserModel user = new UserModel();
         BeanUtils.copyProperties(userDto, user);
 
-        String urlImagem;
+        String imgUrl;
+
         try {
-            urlImagem = fileUploadService.FazerUpload(userDto.face());
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            imgUrl = FileUploadService.FazerUpload(userDto.image());
+
+            var upload = Blob.UploadFileToBlob(imgUrl);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        user.setFace(urlImagem);
 
         // Salva o novo usuário no banco de dados
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
@@ -82,15 +87,18 @@ public class UserController {
         UserModel user = searchUser.get();
 
         BeanUtils.copyProperties(userDto, user);
-
-        String urlImagem;
+        String imgUrl;
 
         try {
-            urlImagem = fileUploadService.FazerUpload(userDto.face());
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            imgUrl = FileUploadService.FazerUpload(userDto.image());
+
+            var upload = Blob.UploadFileToBlob(imgUrl);
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
         }
-        user.setFace(urlImagem);
+        user.setFace(imgUrl);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
